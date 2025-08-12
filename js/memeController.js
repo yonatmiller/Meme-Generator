@@ -10,4 +10,15 @@ function renderMeme(){
     getMeme()
 }
 
+function onDownloadCanvas(elLink){
+    const imgContent = gElCanvas.toDataURL('image/jpeg')
+    elLink.href = imgContent
+}
+
+function onSEetFont(dif){
+    gMeme.lines[gMeme.selectedLineIdx].size += dif
+    
+    renderMeme()
+}
+
 

@@ -15,7 +15,7 @@ function getMeme(){
     elImg.src = img.url
     elImg.onload = () => {
         gCtx.drawImage(elImg, 0, 0, elImg.naturalWidth, elImg.naturalHeight)
-        gCtx.font = gMeme.lines[gMeme.selectedLineIdx].size
+        gCtx.font = gMeme.lines[gMeme.selectedLineIdx].size + 'px Arial'
         gCtx.fillStyle = gMeme.lines[gMeme.selectedLineIdx].color
         gCtx.textBaseline = 'top'
         gCtx.textAlign = 'left'
@@ -34,3 +34,10 @@ function setImg(imgId){
     gMeme.selectedImgId = imgId
     renderMeme()
 }
+
+function updateAll(event) {
+  document.querySelectorAll("p").forEach((p) => {
+    p.style.color = event.target.value;
+  });
+}
+

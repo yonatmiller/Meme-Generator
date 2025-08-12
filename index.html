@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="/css/main.css" />
+		<title>Meme Generator</title>
+	</head>
+
+	<body onload="onInit()">
+		<h1>Meme Generator</h1>
+
+		<div class="canvas-container">
+			<canvas width="400" height="400"> </canvas>
+			<input class="canvas-text" type="text" oninput="setLineTxt()"/>
+			<input type="color" id="brushColor" name="brush Color" form="frmRegister" value="#ff0000"/>
+			<button class="btn-increase" onclick="onSEetFont(+1)">A+</button>
+			<button class="btn-decrease" onclick="onSEetFont(-1)">A-</button>
+		</div>
+		
+		<h2>
+        	<a href="#" onclick="onDownloadCanvas(this)" download>Download</a>
+    	</h2>
+
+        <section class="gallery-container"></section>
+        <section class="editor"></section>
+
+		<script src="/js/main.js"></script>
+		<script src="/js/memeController.js"></script>
+		<script src="/js/memeService.js"></script>
+		<script src="/js/galleryController.js"></script>
+
+		<script src="/img/X-Everywhere.jpg" class="img"></script>
+	</body>
+</html>
