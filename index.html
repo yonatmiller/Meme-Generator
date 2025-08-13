@@ -11,11 +11,12 @@
 		<h1>Meme Generator</h1>
 
 		<div class="canvas-container">
-			<canvas width="400" height="400"> </canvas>
+			<canvas width="400" height="400" onclick="onShowLines(event)"> </canvas>
 			<input class="canvas-text" type="text" oninput="setLineTxt()"/>
-			<input type="color" id="brushColor" name="brush Color" form="frmRegister" value="#ff0000"/>
+			<input type="color" id="brushColor" name="brush Color" class="brushColor" form="frmRegister" value="#ff0000"/>
 			<button class="btn-increase" onclick="onSEetFont(+1)">A+</button>
 			<button class="btn-decrease" onclick="onSEetFont(-1)">A-</button>
+			<button class="btnAddLine" onclick="onAddLine()">+</button>
 		</div>
 		
 		<h2>
