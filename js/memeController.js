@@ -1,9 +1,9 @@
 'use strict'
 
-var gImgs = [{id: 1, url:'img/putin.jpg', keywords: ['putin', 'russia']},
-            {id: 3, url: 'img/girl.jpg', keywords: ['dance', 'girl', 'dress', 'flower']},
-            {id: 4, url: 'img/baby.jpg', keywords: ['funny', 'baby','shock']},
-            {id: 5, url: 'img/X-Everywhere.jpg', keywords: ['Toy Story', 'Kebuai','baz', 'Woody']}]
+var gImgs = [{id: 1, url:'../img/putin.jpg', keywords: ['putin', 'russia']},
+            {id: 3, url: '../img/girl.jpg', keywords: ['dance', 'girl', 'dress', 'flower']},
+            {id: 4, url: '../img/baby.jpg', keywords: ['funny', 'baby','shock']},
+            {id: 5, url: '../img/X-Everywhere.jpg', keywords: ['Toy Story', 'Kebuai','baz', 'Woody']}]
 
 var gKeywordSearchCountMap = {'funny': 12,'cat': 16, 'baby': 2}
 var gFilterBy
