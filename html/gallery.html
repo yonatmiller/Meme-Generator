@@ -3,17 +3,28 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="/css/gallery.css">
+		<link rel="stylesheet" href="css/animate.min.css">
+		<link rel="stylesheet" href="css/typografhy.css">
+		<link rel="stylesheet" href="css/main.css" />
+		<link rel="stylesheet" href="css/gallery.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 		<title>Gallery Meme Generator</title>
 	</head>
     <body onload="onInit()">
-		<h1>gallery</h1>
-        
+		<h2>Gallery</h2>
+		<form>
+            <input type="text" placeholder="filter" oninput="onInput(this)">
+            <button onclick="onResetFilter()">reset filter</button>
+        </form>
+        <section class="gallery-container"></section>
 
-		<script src="/js/galleryController.js"></script>
-		<script src="/js/main.js"></script>
-		<script src="/js/memeController.js"></script>
-		<script src="/js/memeService.js"></script>
+		
+		<script src="/js/archiveMeme.js"></script>
+		<script src="/js/storage.service.js"></script>
+		<script src="/js/util.service.js"></script>
+		<script src="js/main.js"></script>
+		<script src="js/memeController.js"></script>
+		<script src="js/memeService.js"></script>
+		<script src="js/galleryController.js"></script>
     </body>
 </html>

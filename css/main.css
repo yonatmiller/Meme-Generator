@@ -8,20 +8,22 @@ canvas {
    
 }
 
-.h2{
+h2{
     flex-direction: column;
+    color: #f29891;
+    text-shadow: 2px 2px 2px rgba(95, 95, 97, 0.2);
 }
 
-button{
+button{ 
     border: solid 1px gray;
     height: 25px;
-    box-shadow: 5px 5px 2px rgba(95, 95, 97, 0.2);
+    box-shadow: 5px 5px 2px #5f5f6133;
     background-color: #b2c7b7;
     cursor: pointer;
 }
 
 input{
-    box-shadow: 5px 5px 2px rgba(95, 95, 97, 0.2)
+    box-shadow: 5px 5px 2px #5f5f6133
 }
 
 .flex{
@@ -37,7 +39,9 @@ input{
 
 .editor{
     flex-direction: column;
-    position: sticky
+    position: sticky;
+    top: 20px;
+    overflow: auto; 
 }
 
 .clean-list{
@@ -60,7 +64,7 @@ input{
     border: 1.5px solid rgb(160, 156, 156) ;
 }
 
-ul {
+.stikcers-ul {
   display: flex;
   gap: 4vw;
   padding-left: 0;
@@ -74,20 +78,22 @@ ul {
 .scrollStickers{
     border: solid 2px gray;
     border-radius: 10px;
+    /* position: fixed */
 }
 
 li {
     list-style-type: none;
+    height: 50px;
     flex: 0 0 10%;
     scroll-snap-align: start;
     text-align: center;
     line-height: 3;
 }
-
+/* 
 li:hover{
     animation: pulse 600ms ;
-}
-
+} */
+/* 
 @keyframes pulse {
   0% {
     transform: scale(1);
@@ -98,7 +104,7 @@ li:hover{
   100% {
     transform: scale(1);
   }
-}
+} */
 /* 
 li::scroll-marker {
     content: " ";

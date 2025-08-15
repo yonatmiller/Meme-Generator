@@ -14,5 +14,13 @@ img{
     margin:none;
 
     height:auto;
-    width: 200px;
+    width: 270px;
+}
+
+.Archive{
+    position: absolute;
+}
+
+.btn-remove-archive-img{
+    position: relative;
 }

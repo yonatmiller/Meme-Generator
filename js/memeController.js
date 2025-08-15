@@ -7,6 +7,12 @@ var gImgs = [{id: 1, url:'/img/putin.jpg', keywords: ['putin', 'russia']},
 
 var gKeywordSearchCountMap = {'funny': 12,'cat': 16, 'baby': 2}
 var gFilterBy
+var gIsDrag = {
+    isDrag: false,
+    typeDrag: '',
+    draggedItem: null
+}
+
 var gSticker = {
     isClicked: false,
     sticker: '',
@@ -31,6 +37,11 @@ function renderGallery(){
     elGallery.innerHTML = strHtmls.join('') 
 }
 
+function renderImg(img) {
+  gElCanvas.height = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
+  gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+}
+
 function onImgSelect(imgId){
     setImg(imgId)
 }
@@ -53,7 +64,6 @@ function onSetFont(dif){
 
 function onCanvas(ev) {
     if(gSticker.isClicked){
-        console.log(ev);
         
         gCtx.font = '30px Arial'
         gCtx.textAlign = 'center'
@@ -107,6 +117,7 @@ function onCanvas(ev) {
         const elFontSizeInput = document.querySelector('.fontSize')
         elFontSizeInput.value = 'font size'
     }
+
 }
 
 function onSwichLine(){
@@ -115,6 +126,13 @@ function onSwichLine(){
     
     gLine.pos.x = gMeme.lines[gMeme.selectedLineIdx].pos.x
     gLine.pos.y = gMeme.lines[gMeme.selectedLineIdx].pos.y
+
+    const elTextInput = document.querySelector('.canvas-text')
+    elTextInput.value = gMeme.lines[gMeme.selectedLineIdx].txt
+    const elFontSizeInput = document.querySelector('.fontSize')
+    elFontSizeInput.value = gMeme.lines[gMeme.selectedLineIdx].size
+
+    renderLine()
 }
 
 function onSetTxt(direction){
@@ -202,72 +220,86 @@ function onSticker(sticker){
 }
 
 function onDown(ev) {
+    gIsDrag.isDrag = true
+    document.body.style.cursor = 'grabbing'
 
-    //* Get mouse/touch position relative to canvas
     const pos = getEvPos(ev)
-
-    //* Exit if click/touch is not on the circle
+    
+    //find line
     const clickedLine = gMeme.lines.find(line => {
         const xLine = line.pos.x
         const yLine = line.pos.y
         const width = textWidth(line)
 
         return (
-            offsetX >= xLine &&
-            offsetX <= xLine + width &&
-            offsetY >= yLine &&
-            offsetY <= yLine + line.size)
+            pos.x >= xLine &&
+            pos.x <= xLine + width &&
+            pos.y >= yLine &&
+            pos.y <= yLine + line.size
+        )
     })
 
+    //find sticker
     const clickedSticker = gMeme.stickers.find(sticker => {
         const xLine = sticker.pos.x
         const yLine = sticker.pos.y
         const size = 20
 
         return (
-            offsetX >= xLine - size/2 &&
-            offsetX <= xLine + size/2 &&
-            offsetY >= yLine - size/2 &&
-            offsetY <= yLine + size/2)
+            pos.x >= xLine - size / 2 &&
+            pos.x <= xLine + size / 2 &&
+            pos.y >= yLine - size / 2 &&
+            pos.y <= yLine + size / 2
+        )
     })
 
     if (clickedLine) {
-        // Todo: Fix modal location relative to screen
-        const idx = gMeme.lines.findIndex(line => line.txt === clickedLine.txt);
-        gMeme.selectedLineIdx = idx
-        const elTextInput = document.querySelector('.canvas-text')
-        elTextInput.value = gMeme.lines[gMeme.selectedLineIdx].txt
-        const elFontSizeInput = document.querySelector('.fontSize')
-        elFontSizeInput.value = gMeme.lines[gMeme.selectedLineIdx].size
-
-        gMeme.lines[gMeme.selectedImgId].pos = pos
-        renderMeme()
-
-    }else if(clickedSticker){
-        const idx = gMeme.stickers.findIndex(sticker => sticker.sticker === clickedSticker.sticker);
-        gSticker[idx].pos = pos
-
-        renderMeme()
+        gIsDrag.typeDrag = 'line'
+        gIsDrag.draggedItem = clickedLine
+    } else if (clickedSticker) {
+        gIsDrag.typeDrag = 'sticker'
+        gIsDrag.draggedItem = clickedSticker
+    } else {
+        gIsDrag.isDrag = false
     }
 }
+
 function onMove(ev) {
-    const { isDrag } = getCircle()
-   
-    if (!isDrag) return
+   if (!gIsDrag.isDrag || !gIsDrag.draggedItem) return
     const pos = getEvPos(ev)
 
-    //* Calculate distance moved from drag start position
-    const dx = pos.x - gLastPos.x
-    const dy = pos.y - gLastPos.y
-
-    //* Update start position for next move calculation
-    gLastPos = pos
-
-    //* Redraw the canvas with updated circle position
-    renderCanvas()
+    gIsDrag.draggedItem.pos = pos
+    renderMeme()
 }
 
 function onUp() {
-    setCircleDrag(false)
-    document.body.style.cursor = 'grab'
+   gIsDrag.isDrag = false
+   document.body.style.cursor = 'grab'
+   
+}
+
+function onUploadImg(ev) {
+  ev.preventDefault()
+  const canvasData = gElCanvas.toDataURL('image/jpeg')
+
+  // After a succesful upload, allow the user to share on Facebook
+  function onSuccess(uploadedImgUrl) {
+    const encodedUploadedImgUrl = encodeURIComponent(uploadedImgUrl)
+    document.querySelector('.share-container').innerHTML = `
+        <a href="${uploadedImgUrl}">Uploaded pic</a>
+        <p>Picture url: ${uploadedImgUrl}</p>
+        <button class="btn-facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=${encodedUploadedImgUrl}&t=${encodedUploadedImgUrl}', '_blank', 'width=600,height=400')">
+        Share on Facebook  
+        </button>`
+  }
+  uploadImg(canvasData, onSuccess)
+}
+
+function onImgInput(ev) {
+  loadImageFromInput(ev, renderImg)
+}
+
+function onRemoveArchiv(ev){
+    console.log(ev);
+    removeImgArchive(meme)
 }

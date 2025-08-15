@@ -84,7 +84,6 @@ elColorInput.addEventListener('input', (ev) => {
     renderMeme()
 })
 
-
 const elFontSizeInput = document.querySelector('.fontSize')
 
 elFontSizeInput.addEventListener('input', (ev) => {
@@ -102,6 +101,10 @@ elFont.addEventListener('input', (ev) => {
     
     renderMeme()
 })
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderGallery();
+});
 
 function textWidth(){ 
     const text = gMeme.lines[gMeme.selectedLineIdx].txt
@@ -155,4 +158,38 @@ function getEvPos(ev) {
         }
     }
     return pos
+}
+
+async function uploadImg(imgData, onSuccess) {
+    const CLOUD_NAME = 'webify'
+    const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
+    const formData = new FormData()
+    formData.append('file', imgData)
+    formData.append('upload_preset', 'webify')
+    try {
+        const res = await fetch(UPLOAD_URL, {
+            method: 'POST',
+            body: formData
+        })
+        const data = await res.json()
+        console.log('Cloudinary response:', data)
+        onSuccess(data.secure_url)
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+function loadImageFromInput(ev, onImageReady) {
+  document.querySelector('.share-container').innerHTML = ''
+  const reader = new FileReader()
+
+  reader.onload = function (event) {
+    const img = new Image()
+    img.onload = () => {
+      onImageReady(img)
+    }
+    img.src = event.target.result
+  }
+  reader.readAsDataURL(ev.target.files[0])
 }

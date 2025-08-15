@@ -18,13 +18,13 @@
                 <!-- <i class="fa-solid fa-bars full" style="color: #fafafa;"></i> -->
 
                 <div class="logo"> <img src="img/logo.png" class="logo-img"></div>
-                <nav class="main-nav">
+                <!-- <nav class="main-nav">
                     <ul class="flex clean-list">
                         <li><a class="a-main-nav" href="/html/gallery.html">gallery</a></li>
                         <li><a class="a-main-nav" href="#">Memes</a></li>
                         <li><a class="a-main-nav" href="#">About</a></li>
                     </ul>
-                </nav>
+                </nav> -->
             </div>
 		</header>
 
@@ -32,6 +32,12 @@
 		<h2 class="h2 flex">
 			<canvas width="350" height="250" 
 				onclick="onCanvas(event)"
+				onmousedown="onDown(event)"
+				onmousemove="onMove(event)"
+				onmouseup="onUp(event)"
+				ontouchstart="onDown(event)"
+				ontouchend="onUp()"
+				ontouchmove="onDraw(event)"
 
 				>
 			</canvas>
@@ -64,7 +70,7 @@
 					<button  class="btn-save" onclick="onSaveMeme()">Save meme</button>
 				</div>
 				<div class="scrollStickers">
-				<ul>
+				<ul class="stikcers-ul">
 					<li onclick="onSticker('❤️')">❤️</li>
 					<li onclick="onSticker('💕')">💕</li>
 					<li onclick="onSticker('😛')">😛</li>
@@ -74,31 +80,51 @@
 				</ul>
 			</div>
 				<button><a href="#" onclick="onDownloadCanvas(this)" download>Download</a></button>
+				<div>
+				<form
+					action=""
+					method="POST"
+					enctype="multipart/form-data"
+					onsubmit="onUploadImg(event)">
+					<input name="img" id="imgData" type="hidden" />
+					<button class="btn" type="submit">Upload to Cloud</button>
+				</form>
 				
+				</div>
+				<div class="share-container"></div>
+    			<hr />	
+				<div class="m-10">
+					<label>
+						Background photo:
+						<input
+						type="file"
+						class="file-input btn"
+						name="image"
+						onchange="onImgInput(event)"
+						/>
+					</label>
+				</div>
+				</div>
 			</div>
-			
-		</div>
 
-		
-
-		<h2>Gallery</h2>
+		<h2>Gallery <i class="fa-solid fa-images"></i></h2>
 		<form>
             <input type="text" placeholder="filter" oninput="onInput(this)">
             <button onclick="onResetFilter()">reset filter</button>
         </form>
+
 		<section class="gallery-container"></section>
 
-		<h2>Archive</h2>
+		<h2>Archive <i class="fa-solid fa-box-archive"></i></h2>
 		<section class="Archive"></section>
 
-		<script src="/js/archiveMeme.js"></script>
-		<script src="/js/storage.service.js"></script>
-		<script src="/js/util.service.js"></script>
+		<script src="js/archiveMeme.js"></script>
+		<script src="js/storage.service.js"></script>
+		<script src="js/util.service.js"></script>
 		<script src="js/main.js"></script>
 		<script src="js/memeController.js"></script>
 		<script src="js/memeService.js"></script>
 		<script src="js/galleryController.js"></script>
 
-		<script src="img/X-Everywhere.jpg" class="img"></script>
 	</body>
 </html>

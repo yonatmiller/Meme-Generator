@@ -1,11 +1,14 @@
 'use strict'
 
 function renderArchive() {
+    
     const elArchive = document.querySelector('.Archive')
     const memes = loadFromStorage(STORAGE_KEY) || []
 
     const strHtmls = memes.map((meme, idx) => {
-        return `<img src="${meme.url}" class="archive-img" data-idx="${idx}">`
+        return `
+        <img src="${meme.url}" class="archive-img" data-idx="${idx}">`
+        
     })
 
     elArchive.innerHTML = strHtmls.join('')
@@ -15,6 +18,13 @@ function renderArchive() {
             loadMemeOntoCanvas(imgEl.dataset.idx)
         })
     })
+    
+    document.querySelectorAll('.btn-remove-archive-img').forEach(imgEl => {
+        imgEl.addEventListener('click', () => {
+            onRemoveArchiv(imgEl)
+        })
+    }) 
+    
 }
 
 function loadMemeOntoCanvas(idx) {
@@ -47,4 +57,13 @@ function loadMemeOntoCanvas(idx) {
             gCtx.fillText(sticker.sticker, sticker.pos.x -25, sticker.pos.y-25)})
         })
     }
+}
+
+function removeImgArchive(removeMeme){
+    const memes = loadFromStorage(STORAGE_KEY) || []
+    const idx = memes.findIndex(meme => meme === removeMeme)
+	memes.splice(idx, 1)
+
+    // saveToStorage(STORAGE_KEY, memes);
+    renderArchive()
 }
