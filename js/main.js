@@ -1,3 +1,6 @@
+'use strict'
+const STORAGE_KEY = 'meme'
+
 var gElCanvas
 var gCtx
 
@@ -6,4 +9,5 @@ function onInit(){
     gCtx = gElCanvas.getContext('2d')
     renderMeme()
     renderGallery()
+    renderArchive()
 }

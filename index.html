@@ -3,29 +3,97 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="/css/main.css" />
+		<link rel="stylesheet" href="css/animate.min.css">
+		<link rel="stylesheet" href="css/typografhy.css">
+		<link rel="stylesheet" href="css/main.css" />
+		<link rel="stylesheet" href="css/gallery.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 		<title>Meme Generator</title>
 	</head>
 
 	<body onload="onInit()">
-		<h1>Meme Generator</h1>
+		<header>
+			<div class="main-layout">
+            <div class="header-content flex">
+                <!-- <i class="fa-solid fa-bars full" style="color: #fafafa;"></i> -->
 
-		<div class="canvas-container">
-			<canvas width="400" height="400" onclick="onShowLines(event)"> </canvas>
-			<input class="canvas-text" type="text" oninput="setLineTxt()"/>
-			<input type="color" id="brushColor" name="brush Color" class="brushColor" form="frmRegister" value="#ff0000"/>
-			<button class="btn-increase" onclick="onSEetFont(+1)">A+</button>
-			<button class="btn-decrease" onclick="onSEetFont(-1)">A-</button>
-			<button class="btnAddLine" onclick="onAddLine()">+</button>
-		</div>
-		
-		<h2>
-        	<a href="#" onclick="onDownloadCanvas(this)" download>Download</a>
+                <div class="logo"> <img src="img/logo.png" class="logo-img"></div>
+                <nav class="main-nav">
+                    <ul class="flex clean-list">
+                        <li><a class="a-main-nav" href="/html/gallery.html">gallery</a></li>
+                        <li><a class="a-main-nav" href="#">Memes</a></li>
+                        <li><a class="a-main-nav" href="#">About</a></li>
+                    </ul>
+                </nav>
+            </div>
+		</header>
+
+		<div class="canvas-container flex">
+		<h2 class="h2 flex">
+			<canvas width="350" height="250" 
+				onclick="onCanvas(event)"
+
+				>
+			</canvas>
     	</h2>
+			<div class="editor flex">
+				<div class="editor-min">EDITOR</div>
+				<input class="canvas-text" type="text" value="Text" oninput="setLineTxt()"/>
+				<input class="fontSize" type="fontSize" value="fontSize" oninput="setFontSize()"/>
+				<select id="fontLine" name="fontLine" class="fontLine">
+					<option value="Huninn">Huninn</option>
+					<option value="LibertinusSans">LibertinusSans</option>
+					<option value="PlaywriteMXGuides">PlaywriteMXGuides</option>
+				</select>
+				<input type="color" id="brushColor" name="brush Color" class="brushColor" form="frmRegister" value="#ff0000"/>
+				<div class="btn flex">
+					<button class="btn-increase" onclick="onSetFont(+1)">A+</button>
+					<button class="btn-decrease" onclick="onSetFont(-1)">A-</button>
+					<button class="btn-addLine" onclick="onAddLine()">+</button>
+					<button class="btn-swich" onclick="onSwichLine()"><i class="fa-solid fa-arrow-right-arrow-left fa-rotate-90"></i></button>
+				</div class="btn1 flex">
+				<div>
+					<button class="btn-left" onclick="onAlign('left')"><i class="fa-solid fa-align-left"></i></button>
+					<button class="btn-center" onclick="onAlign('center')"><i class="fa-solid fa-align-center"></i></button>
+					<button class="btn-right" onclick="onAlign('right')"><i class="fa-solid fa-align-right"></i></button>
+					<button class="btn-up" onclick="onSetTxt('up')"><i class="fa-solid fa-arrow-down-long fa-rotate-180"></i></i></i></button>
+					<button class="btn-down" onclick="onSetTxt('down')"><i class="fa-solid fa-arrow-down-long"></i></i></button>
+				</div>
+				<div>
+					<button  class="btn-flexible" onclick="onFlexible()">I'm flexible</button>
+					<button  class="btn-save" onclick="onSaveMeme()">Save meme</button>
+				</div>
+				<div class="scrollStickers">
+				<ul>
+					<li onclick="onSticker('❤️')">❤️</li>
+					<li onclick="onSticker('💕')">💕</li>
+					<li onclick="onSticker('😛')">😛</li>
+					<li onclick="onSticker('👙')">👙</li>
+					<li onclick="onSticker('🐰')">🐰</li>
+					<li onclick="onSticker('🥨')">🥨</li>
+				</ul>
+			</div>
+				<button><a href="#" onclick="onDownloadCanvas(this)" download>Download</a></button>
+				
+			</div>
+			
+		</div>
 
-        <section class="gallery-container"></section>
-        <section class="editor"></section>
+		
 
+		<h2>Gallery</h2>
+		<form>
+            <input type="text" placeholder="filter" oninput="onInput(this)">
+            <button onclick="onResetFilter()">reset filter</button>
+        </form>
+		<section class="gallery-container"></section>
+
+		<h2>Archive</h2>
+		<section class="Archive"></section>
+
+		<script src="/js/archiveMeme.js"></script>
+		<script src="/js/storage.service.js"></script>
+		<script src="/js/util.service.js"></script>
 		<script src="js/main.js"></script>
 		<script src="js/memeController.js"></script>
 		<script src="js/memeService.js"></script>
