@@ -102,10 +102,6 @@ elFont.addEventListener('input', (ev) => {
     renderMeme()
 })
 
-document.addEventListener('DOMContentLoaded', () => {
-    renderGallery();
-});
-
 function textWidth(){ 
     const text = gMeme.lines[gMeme.selectedLineIdx].txt
     gCtx.font = `${gMeme.lines[gMeme.selectedLineIdx].size}px ${gMeme.lines[gMeme.selectedLineIdx].font}`

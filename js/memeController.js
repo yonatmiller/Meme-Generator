@@ -1,9 +1,10 @@
 'use strict'
 
-var gImgs = [{id: 1, url:'../img/putin.jpg', keywords: ['putin', 'russia']},
-            {id: 3, url: '../img/girl.jpg', keywords: ['dance', 'girl', 'dress', 'flower']},
-            {id: 4, url: '../img/baby.jpg', keywords: ['funny', 'baby','shock']},
-            {id: 5, url: '../img/X-Everywhere.jpg', keywords: ['Toy Story', 'Kebuai','baz', 'Woody']}]
+var gImgs = [{id: 1, url:'../img/Moana.jpg', keywords: ['putin', 'russia']},
+            {id: 2, url: '../img/Zootropolis.png', keywords: ['dance', 'girl', 'dress', 'flower']},
+            {id: 3, url: '../img/Tinkerbell.jpg', keywords: ['funny', 'baby','shock']},
+            {id: 4, url: '../img/Olaf.jpg', keywords: ['funny', 'baby','shock']},
+            {id: 5, url: '../img/ToyStory.jpg', keywords: ['Toy Story', 'Kebuai','baz', 'Woody']}]
 
 var gKeywordSearchCountMap = {'funny': 12,'cat': 16, 'baby': 2}
 var gFilterBy
@@ -71,6 +72,10 @@ function onCanvas(ev) {
         gCtx.fillText(gSticker.sticker, ev.offsetX, ev.offsetY)
 
         gMeme.stickers.push({sticker: gSticker.sticker, pos:{x: ev.offsetX, y: ev.offsetY}})
+        
+        var elSticker = document.querySelector('.scrollStickers')
+        elSticker.style.border = '2px solid gray';
+        
         gSticker.isClicked = false
         return
     }
@@ -149,6 +154,12 @@ function renderLine(){
     gCtx.strokeRect(gLine.pos.x,gLine.pos.y,gLine.width, gLine.height )
 }
 
+function renderStickers() {
+    var stickerIdx = gMeme.findIndex(meme => meme.sticker)
+    if (stickerIdx !== -1) {
+        gMeme.splice(stickerIdx, 1)
+    }
+}
 function onAddLine(){
     var newLine = {
         pos:{
@@ -174,8 +185,10 @@ function onAlign(side){
 }
 
 function onFlexible(){
+    // renderStickers()
+     console.log(gMeme);
     var indexImg = getRandomInt(1, gImgs.length+1)
-    console.log(gImgs[indexImg]);
+   
     
     gMeme.selectedImgId = indexImg
 
@@ -217,6 +230,9 @@ function onInput(el){
 function onSticker(sticker){
     gSticker.isClicked = true
     gSticker.sticker = sticker
+
+    var elSticker = document.querySelector('.scrollStickers')
+    elSticker.style.border = '4px solid gray';
 }
 
 function onDown(ev) {
@@ -224,6 +240,7 @@ function onDown(ev) {
     document.body.style.cursor = 'grabbing'
 
     const pos = getEvPos(ev)
+    gLine.pos = pos
     
     //find line
     const clickedLine = gMeme.lines.find(line => {
@@ -269,7 +286,10 @@ function onMove(ev) {
     const pos = getEvPos(ev)
 
     gIsDrag.draggedItem.pos = pos
+    gLine.pos = pos
+    
     renderMeme()
+    renderLine()
 }
 
 function onUp() {
